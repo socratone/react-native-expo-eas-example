@@ -13,15 +13,25 @@ interface ButtonProps {
   children: string;
   onPress?: () => void;
   size?: 'small' | 'medium';
+  disabled?: boolean;
   style?: StyleProp<ViewStyle>;
 }
 
-const Button = ({ children, onPress, size, style }: ButtonProps) => {
+const Button = ({ children, onPress, size, disabled, style }: ButtonProps) => {
+  const handlePress = () => {
+    if (disabled) return;
+    onPress && onPress();
+  };
+
   return (
     <TouchableOpacity
-      onPress={onPress}
-      activeOpacity={0.5}
-      style={[styles.container, style]}
+      onPress={handlePress}
+      activeOpacity={disabled ? 1 : 0.5}
+      style={[
+        styles.container,
+        { backgroundColor: disabled ? 'whitesmoke' : 'pink' },
+        style,
+      ]}
     >
       <Text style={[{ fontSize: size === 'small' ? 40 : 50 }, styles.text]}>
         {children}
@@ -35,7 +45,6 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     width: windowWidth / 4.5,
     borderRadius: 50,
-    backgroundColor: 'pink',
     alignItems: 'center',
     justifyContent: 'center',
   },
