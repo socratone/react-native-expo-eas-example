@@ -70,6 +70,13 @@ export default function App() {
     });
   };
 
+  const handleBack = () => {
+    setValue((preValue) => {
+      if (preValue.length === 0) return preValue;
+      return preValue.substring(0, preValue.length - 1);
+    });
+  };
+
   return (
     <View style={styles.container}>
       <Screen value={value} onChange={setValue} style={{ marginBottom: 10 }} />
@@ -83,8 +90,8 @@ export default function App() {
         <Button onPress={() => setValue('')} size="small">
           CE
         </Button>
-        <Button onPress={() => handleNumber('')} size="small">
-          ON
+        <Button onPress={handleBack} size="small">
+          ←
         </Button>
       </Row>
       <Row style={{ marginBottom: 10 }}>
